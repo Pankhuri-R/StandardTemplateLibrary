@@ -1,0 +1,118 @@
+#include<iostream>
+#include<vector>
+#include<cctype>
+#include<list>
+#include<algorithm>
+
+class Player{
+private:
+    std::string name;
+    int age;
+public:
+    Player()=default;
+    Player(std::string name,int age)
+        :name{name},age{age}
+        {}
+   bool operator>(const Player &p) const{
+       return (this->age>p.age);
+   }
+   
+   bool operator==(const Player &p) const{
+       return (this->name==p.name&&this->age==p.age);
+   }
+     
+};
+
+void find_test()
+{
+    std::vector<int>vec{1,4,7,0,5,3,2};
+    auto loc= std::find(std::begin(vec),std::end(vec),6);
+    if(loc!=vec.end())
+        std::cout<<"Found the number"<<std::endl;
+    else
+        std::cout<<"Couldn't find the number"<<std::endl;
+    
+    std::list<Player>players {
+        {"Hermione",100},
+        {"Harry",70},
+        {"Ron",40}
+    };
+    auto loc1=std::find(players.begin(),players.end(),Player{"Ron",40});
+    if(loc1 !=players.end())
+        std::cout<<"Found the player"<<std::endl;
+    else
+        std::cout<<"Couldn't find the player"<<std::endl;
+}
+
+void count_test()
+{
+     std::vector<int>vec{1,2,5,5,4,7,0,5,3,2};
+    int loc= std::count(std::begin(vec),std::end(vec),5);
+    std::cout<<loc<<" times occurrences found"<<std::endl;
+}
+
+void count_if_test()
+{
+    std::vector<int>vec{2,3,4,5,6,7,8,9,10};
+    int num=std::count_if(std::begin(vec),std::end(vec),[] (int x) { return x%2==0;});
+    std::cout<<num<<" even numbers are found"<<std::endl;
+    
+    num=std::count_if(std::begin(vec),std::end(vec),[] (int x) { return x%2!=0;});
+    std::cout<<num<<" odd numbers are found"<<std::endl;
+}
+
+void replace_test()
+{
+    std::vector<int>vec{2,3,45,99,5,6,7,8,9,10};
+    for(auto i:vec)
+        std::cout<<i<<" ";
+    std::cout<<std::endl; 
+    std::replace(std::begin(vec),std::end(vec),45,4);
+    std::replace(std::begin(vec),std::end(vec),99,5);
+    for(auto i:vec)
+        std::cout<<i<<" ";
+    std::cout<<std::endl;    
+}
+
+void all_of_test()
+{
+    std::vector<int>vec{5,10,15,20,25,30};
+    if(std::all_of(vec.begin(),vec.end(),[] (int x) { return x>10;}))
+      std::cout<<"All numbers are >10"<<std::endl;
+    else
+      std::cout<<"All numbers are not >10"<<std::endl;  
+    
+     if(std::all_of(vec.begin(),vec.end(),[] (int x) { return x<40;}))
+      std::cout<<"All numbers are <40"<<std::endl;
+    else
+      std::cout<<"All numbers are not <40"<<std::endl;  
+  
+}
+
+void transform_test()
+{
+    std::vector<std::string>names{"Harry","Hermione","Ron"};
+    for(auto i:names)
+        std::cout<<i<<" ";
+    std::cout<<std::endl;
+    std::string str{"This is a test"};
+    std::cout<<"Before transform: "<<str<<std::endl;
+    std::transform(str.begin(),str.end(),str.begin(),::toupper);
+    std::cout<<"After transform: "<<str<<std::endl;
+}
+
+int main()
+{
+    find_test();
+    std::cout<<"****************************"<<std::endl;
+    count_test();
+    std::cout<<"****************************"<<std::endl;
+    count_if_test();
+    std::cout<<"****************************"<<std::endl;
+    replace_test();
+    std::cout<<"****************************"<<std::endl;
+    all_of_test();
+    std::cout<<"****************************"<<std::endl;
+    transform_test();
+    return 0;
+}
